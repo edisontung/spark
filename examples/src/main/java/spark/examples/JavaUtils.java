@@ -9,20 +9,15 @@ import scala.runtime.*;
 import scala.reflect.*;
 
 class JavaUtils {
-  public static abstract class GenFunction extends scala.runtime.AbstractFunction1<java.lang.Object, java.lang.Object> implements java.io.Serializable {
+  public static abstract class GenFunction1 extends scala.runtime.AbstractFunction1<java.lang.Object, java.lang.Object> implements java.io.Serializable {
     public abstract java.lang.Object apply(java.lang.Object o);
   }
   
-  public static class CManifest {
-    private java.lang.Class orig;
-    private ClassManifest cm;
-    public CManifest(java.lang.Class c) {
-      orig = c;
-      cm = ClassManifest$.MODULE$.fromClass(c);
-    }
-    
-    public ClassManifest manifest() {
-      return cm;
-    }
+  public static ClassManifest getManifest(java.lang.Class c) {
+    return ClassManifest$.MODULE$.fromClass(c);
+  }
+  
+  public static abstract class GenFunction2 extends scala.runtime.AbstractFunction2<java.lang.Object, java.lang.Object, java.lang.Object> implements java.io.Serializable {
+    public abstract java.lang.Object apply(java.lang.Object o1, java.lang.Object o2);
   }
 }
