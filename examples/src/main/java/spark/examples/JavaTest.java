@@ -11,7 +11,7 @@ import spark.examples.JavaUtils;
 
 class JavaTest {
 		
-  public static class MyFunction1 extends JavaUtils.GenFunction {
+  public static class MyFunction1 extends JavaUtils.GenFunction1 {
     public java.lang.Object apply(java.lang.Object o) {
         String s = (String) o;
         return java.lang.Double.parseDouble(s);
@@ -29,7 +29,7 @@ class JavaTest {
     }
     MyFunction1 f = new MyFunction1();
     
-    ClassManifest c = new JavaUtils.CManifest(java.lang.Object.class).manifest();
+    ClassManifest c = JavaUtils.getManifest(java.lang.Object.class);
     
     System.out.println(c.erasure());
     RDD data = lines.map(f, c).cache();

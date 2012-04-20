@@ -17,13 +17,13 @@ class JavaWordCount {
     public java.lang.Object apply(java.lang.Object o) {
         String s = (String) o;
         StringOps op = new StringOps(s);
-        return op.split(' ');
+        return JavaUtils.wrapArray(op.split(' '));
     }
   }
   
   public static class MyFunction1 extends JavaUtils.GenFunction1 {
     public java.lang.Object apply(java.lang.Object o) {
-      return new Tuple2(o, 1);
+      return new Tuple2((String)o, 1);
     }
   }
 	
@@ -52,18 +52,18 @@ class JavaWordCount {
     ClassManifest c = JavaUtils.getManifest(java.lang.Object.class);
 
     System.out.println(c.erasure());
-    RDD words = lines.flatMap(sFunc, c).cache();
+    RDD words = lines.flatMap(sFunc, c);
     
-    RDD splits = words.map(f1, c).cache();
+    RDD splits = words.map(f1, c);
     
     PairRDDFunctions applier = new PairRDDFunctions(splits, c, JavaUtils.getManifest(java.lang.Integer.class));
     
-    RDD counts = applier.reduceByKey(f).cache();
+    RDD counts = applier.reduceByKey(f);
     
     System.out.println("output");
     java.lang.Object[] output = (java.lang.Object[])counts.collect();
     for (int i = 0; i < output.length; i++) {
-      System.out.println(((Tuple2)output[i])._1);
+      System.out.print(((Tuple2)output[i])._1 + ": ");
       System.out.println(((Tuple2)output[i])._2);
     }
   }
